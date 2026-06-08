@@ -1,0 +1,47 @@
+import streamlit as st
+
+def apply_filters(df):
+
+    st.sidebar.header("Dashboard Filters")
+
+    gender = st.sidebar.multiselect(
+        "Gender",
+        df["gender"].unique(),
+        default=df["gender"].unique()
+    )
+
+    race = st.sidebar.multiselect(
+        "Race/Ethnicity",
+        df["race/ethnicity"].unique(),
+        default=df["race/ethnicity"].unique()
+    )
+
+    prep = st.sidebar.multiselect(
+        "Test Preparation",
+        df["test preparation course"].unique(),
+        default=df["test preparation course"].unique()
+    )
+
+    min_score,max_score = st.sidebar.slider(
+        "Math Score Range",
+        0,
+        100,
+        (0,100)
+    )
+
+    filtered = df[
+        (df["gender"].isin(gender))
+        &
+        (df["race/ethnicity"].isin(race))
+        &
+        (df["test preparation course"].isin(prep))
+        &
+        (df["math score"]>=min_score)
+        &
+        (df["math score"]<=max_score)
+    ]
+
+    if st.sidebar.button("Reset Filters"):
+        st.rerun()
+
+    return filtered
