@@ -27,7 +27,7 @@ st.set_page_config(
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/StudentsPerformance.csv")
+    df = pd.read_csv("StudentsPerformance.csv")
 
     df["average_score"] = (
         df["math score"] +
